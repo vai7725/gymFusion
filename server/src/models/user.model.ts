@@ -4,7 +4,8 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 
-// Define an interface for the user document
+// Define an interface for the user document.
+// You can change update user schema as per the need
 interface User extends Document {
   name: string;
   email: string;
@@ -89,6 +90,34 @@ const userSchema = new Schema<User>(
     allotedShift: {
       type: Schema.Types.ObjectId,
       ref: 'Shift',
+    },
+    isSubscriptionActive: {
+      type: Boolean,
+      default: false,
+    },
+    subscriptionStartDate: {
+      type: Date,
+    },
+    subscriptionEndDate: {
+      type: Date,
+    },
+    refreshToken: {
+      type: String,
+      select: false,
+    },
+    forgotPasswordToken: {
+      type: String,
+      select: false,
+    },
+    forgotPasswordTokenExpiration: {
+      type: Date,
+    },
+    emailVerificationToken: {
+      type: String,
+      select: false,
+    },
+    emailVerificationTokenExpiration: {
+      type: Date,
     },
   },
   { timestamps: true }
