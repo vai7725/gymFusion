@@ -1,6 +1,6 @@
 // make sure to check these settings in the your code editor
 
-// in VS code :- 
+// in VS code :-
 // settings > `search "Format on save"` > `check the box`
 
 // in nVim :-
