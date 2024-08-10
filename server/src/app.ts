@@ -7,10 +7,11 @@ import cookieParser from 'cookie-parser';
 import { BASEPATH } from './constants';
 import { errorHandler } from './middlewares/error.middleware';
 import { ApiResponse } from './utils/ApiResponse';
-import { ApiError } from './utils/ApiError';
 
 // router imports
 import authRouters from './routes/auth.routes.js';
+import { asyncHandler } from './utils/asyncHandler';
+import { ApiError } from './utils/ApiError';
 
 // constants
 const app = express();
@@ -27,15 +28,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // test route
-app.get(`${BASEPATH}/healthcheck`, (req: Request, res: Response, next: NextFunction) => {
+app.get(`${BASEPATH}/healthcheck`, (req: Request, res: Response) => {
   try {
-    return res.status(200).json(new ApiResponse(200, 'ok'));
-  } catch (error) {
-    console.log(error);
-    next(new ApiError(500, (error as Error).message));
+    return res
+      .status(200)
+      .json(new ApiResponse(200, {}, 'Everything is good!'));
+  } catch (error: any) {
+    throw new ApiError(500, error.message || 'Something went wrong');
   }
 });
-
 
 // auth & user routes
 app.use(`${BASEPATH}/auth`, authRouters);

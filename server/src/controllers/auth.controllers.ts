@@ -4,6 +4,6 @@ import { Request, Response } from 'express';
 import { asyncHandler } from '../utils/asyncHandler';
 import { ApiResponse } from '../utils/ApiResponse';
 
-export const registerUser = asyncHandler(async (req: Request, res: Response) => {
-  // Logic will be written here
-});
+export const registerUser = asyncHandler(
+  async (req: Request, res: Response) => {}
+);
