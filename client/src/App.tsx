@@ -1,29 +1,33 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import DashboardLayout from "./Layout/DashboardLayout";
-import DashboardPage from "./pages/Dashboard/DashboardPage";
-import LandingPage from "./pages/LandingPage/LandingPage";
-import HomeLayout from "./Layout/HomeLayout";
-import AuthLayout from "./Layout/AuthLayout";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import LandingPage from './pages/LandingPage/LandingPage';
+import HomeLayout from './Layout/HomeLayout';
+import AuthLayout from './Layout/AuthLayout';
+import OrderPage from './pages/Dashboard/OrderPage';
+import DashboardLayout from './Layout/DashboardLayout';
+import DashboardPage from './pages/Dashboard/DashboardPage';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <HomeLayout />,
-    children: [{ path: "", element: <LandingPage /> }],
+    children: [{ path: '', element: <LandingPage /> }],
   },
   {
-    path: "/dashboard/",
+    path: '/dashboard/',
     element: <DashboardLayout />,
-    children: [{ path: "dashboard", element: <DashboardPage /> }],
+    children: [
+      { path: '', element: <DashboardPage /> },
+      { path: 'order', element: <OrderPage /> },
+    ],
   },
   {
-    path: "/auth/",
+    path: '/auth/',
     element: <AuthLayout />,
     children: [
-      { path: "login", element: <LoginPage /> },
-      { path: "register", element: <RegisterPage /> },
+      { path: 'login', element: <LoginPage /> },
+      { path: 'register', element: <RegisterPage /> },
     ],
   },
 ]);
