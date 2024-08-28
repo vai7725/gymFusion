@@ -1,15 +1,5 @@
-import {
-  Bell,
-  CircleUser,
-  Home,
-  LineChart,
-  Menu,
-  Package,
-  Package2,
-  Search,
-  ShoppingCart,
-  Users,
-} from 'lucide-react';
+import { Bell, Menu, Package2, Search } from 'lucide-react';
+
 import { Button } from '../ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
 import { Link } from 'react-router-dom';
@@ -23,8 +13,30 @@ import {
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import svg1 from '../../assets/icons/icon-1.svg';
+import svg2 from '../../assets/icons/icon-2.svg';
+import svg3 from '../../assets/icons/icon-3.svg';
+import svg4 from '../../assets/icons/icon-4.svg';
+import svg5 from '../../assets/icons/icon-5.svg';
+import svg6 from '../../assets/icons/icon-6.svg';
 
-function DashboardHeader() {
+interface NavItem {
+  icon: string;
+  label: string;
+  to: string;
+}
+
+const navText: NavItem[] = [
+  { icon: svg3, label: 'Dashboard', to: '/dashboard' },
+  { icon: svg2, label: 'Workout Plan', to: '/dashboard/workout_plan' },
+  { icon: svg6, label: 'Diet Food Plan', to: '/dashboard/diet_food_plan' },
+  { icon: svg1, label: 'Attendance', to: '/dashboard/attendance' },
+  { icon: svg2, label: 'Trainers', to: '/dashboard/trainers' },
+  { icon: svg5, label: 'Subscription', to: '/dashboard/subscription' },
+  { icon: svg4, label: 'Personal Record', to: '/dashboard/personal_record' },
+];
+
+function MobileDashboardHeader() {
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
       <Sheet>
@@ -36,48 +48,16 @@ function DashboardHeader() {
         </SheetTrigger>
         <SheetContent side="left" className="flex flex-col">
           <nav className="grid gap-2 text-lg font-medium">
-            <Link
-              to="#"
-              className="flex items-center gap-2 text-lg font-semibold"
-            >
-              <Package2 className="h-6 w-6" />
-              <span className="sr-only">Acme Inc</span>
-            </Link>
-            <Link
-              to="#"
-              className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-            >
-              <Home className="h-5 w-5" />
-              Dashboard
-            </Link>
-            <Link
-              to="#"
-              className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
-            >
-              <ShoppingCart className="h-5 w-5" />
-              Orders
-            </Link>
-            <Link
-              to="#"
-              className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-            >
-              <Package className="h-5 w-5" />
-              Products
-            </Link>
-            <Link
-              to="#"
-              className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-            >
-              <Users className="h-5 w-5" />
-              Customers
-            </Link>
-            <Link
-              to="#"
-              className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-            >
-              <LineChart className="h-5 w-5" />
-              Analytics
-            </Link>
+            {navText.map((item, index) => (
+              <Link
+                key={index}
+                to={item.to}
+                className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+              >
+                <img src={item.icon} alt="logo" className="p-2 h-4 w-4" />
+                {item.label}
+              </Link>
+            ))}
           </nav>
         </SheetContent>
       </Sheet>
@@ -86,7 +66,7 @@ function DashboardHeader() {
           <div className="relative">
             <Search
               color="white"
-              className="absolute left-2.5 top-[12px] h-4 w-4 text-muted-foreground"
+              className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground"
             />
             <Input
               type="search"
@@ -123,7 +103,7 @@ function DashboardHeader() {
   );
 }
 
-function MobileDashboardHeader() {
+function DashboardHeader() {
   return (
     <div className="hidden bg-black border-r bg-muted/40 md:block">
       <div className="flex h-full max-h-screen flex-col gap-2">
@@ -135,41 +115,16 @@ function MobileDashboardHeader() {
         </div>
         <div className="flex-1">
           <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-            <Link
-              to="#"
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-            >
-              <Home className="h-4 w-4" />
-              Dashboard
-            </Link>
-            <Link
-              to="#"
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-            >
-              <ShoppingCart className="h-4 w-4" />
-              Orders
-            </Link>
-            <Link
-              to="#"
-              className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
-            >
-              <Package className="h-4 w-4" />
-              Products{' '}
-            </Link>
-            <Link
-              to="#"
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-            >
-              <Users className="h-4 w-4" />
-              Customers
-            </Link>
-            <Link
-              to="#"
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-            >
-              <LineChart className="h-4 w-4" />
-              Analytics
-            </Link>
+            {navText.map((item, index) => (
+              <Link
+                key={index}
+                to={item.to}
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+              >
+                <img src={item.icon} alt="logo" className="p-2 h-4 w-4" />
+                {item.label}
+              </Link>
+            ))}
           </nav>
         </div>
       </div>

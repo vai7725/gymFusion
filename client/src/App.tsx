@@ -7,16 +7,19 @@ import AuthLayout from './Layout/AuthLayout';
 import OrderPage from './pages/Dashboard/OrderPage';
 import DashboardLayout from './Layout/DashboardLayout';
 import DashboardPage from './pages/Dashboard/DashboardPage';
+import ErrorPage from './pages/ErrorPage';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <HomeLayout />,
+    errorElement: <ErrorPage />,
     children: [{ path: '', element: <LandingPage /> }],
   },
   {
     path: '/dashboard/',
     element: <DashboardLayout />,
+    errorElement: <ErrorPage />,
     children: [
       { path: '', element: <DashboardPage /> },
       { path: 'order', element: <OrderPage /> },
@@ -25,6 +28,7 @@ const router = createBrowserRouter([
   {
     path: '/auth/',
     element: <AuthLayout />,
+    errorElement: <ErrorPage />,
     children: [
       { path: 'login', element: <LoginPage /> },
       { path: 'register', element: <RegisterPage /> },
