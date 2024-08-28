@@ -12,14 +12,14 @@ import ErrorPage from './pages/ErrorPage';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <HomeLayout />,
     errorElement: <ErrorPage />,
+    element: <HomeLayout />,
     children: [{ path: '', element: <LandingPage /> }],
   },
   {
     path: '/dashboard/',
-    element: <DashboardLayout />,
     errorElement: <ErrorPage />,
+    element: <DashboardLayout />,
     children: [
       { path: '', element: <DashboardPage /> },
       { path: 'order', element: <OrderPage /> },
@@ -27,8 +27,8 @@ const router = createBrowserRouter([
   },
   {
     path: '/auth/',
-    element: <AuthLayout />,
     errorElement: <ErrorPage />,
+    element: <AuthLayout />,
     children: [
       { path: 'login', element: <LoginPage /> },
       { path: 'register', element: <RegisterPage /> },
