@@ -6,7 +6,7 @@ import crypto from 'crypto';
 
 // Define an interface for the user document.
 // You can change update user schema as per the need
-interface User extends Document {
+export interface User extends Document {
   name: string;
   email: string;
   phone: number;
@@ -26,10 +26,18 @@ interface User extends Document {
   subscriptionStartDate: Date;
   subscriptionEndDate: Date;
   refreshToken: string;
-  forgotPasswordToken: string;
-  forgotPasswordTokenExpiration: Date;
-  emailVerificationToken: string;
-  emailVerificationTokenExpiration: Date;
+  forgotPasswordToken: string | undefined;
+  forgotPasswordTokenExpiration: number | undefined;
+  emailVerificationToken: string | undefined;
+  emailVerificationTokenExpiration: number | undefined;
+  isPasswordCorrect(password: string): Promise<boolean>;
+  generateAccessToken(): string;
+  generateRefreshToken(): string;
+  generateTemporaryToken(): {
+    unHashedToken: string;
+    hashedToken: string;
+    tokenExpiry: number;
+  };
 }
 
 // Define the user schema
@@ -117,24 +125,26 @@ const userSchema = new Schema<User>(
       select: false,
     },
     emailVerificationTokenExpiration: {
-      type: Date,
+      type: Number,
     },
   },
   { timestamps: true }
 );
 
 // Pre middlewares will be written here
-userSchema.pre('save', async function (next) {
+userSchema.pre<User>('save', async function (next) {
   if (!this.isModified('password')) return next();
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 
-userSchema.methods.isPasswordCorrect = async function (password: string) {
+userSchema.methods.isPasswordCorrect = async function (
+  password: string
+): Promise<boolean> {
   return await bcrypt.compare(password, this.password);
 };
 
-userSchema.methods.generateAccessToken = function () {
+userSchema.methods.generateAccessToken = function (): string {
   return jwt.sign(
     {
       _id: this._id,
@@ -146,7 +156,7 @@ userSchema.methods.generateAccessToken = function () {
   );
 };
 
-userSchema.methods.generateRefreshToken = function () {
+userSchema.methods.generateRefreshToken = function (): string {
   return jwt.sign(
     {
       _id: this._id,
@@ -156,7 +166,11 @@ userSchema.methods.generateRefreshToken = function () {
   );
 };
 
-userSchema.methods.generateTemporaryToken = function () {
+userSchema.methods.generateTemporaryToken = function (): {
+  unHashedToken: string;
+  hashedToken: string;
+  tokenExpiry: number;
+} {
   // This token should be client facing
   // for example: for email verification unHashedToken should go into the user's mail
   const unHashedToken = crypto.randomBytes(20).toString('hex');
@@ -167,7 +181,9 @@ userSchema.methods.generateTemporaryToken = function () {
     .update(unHashedToken)
     .digest('hex');
   // This is the expiry time for the token (20 minutes)
-  const tokenExpiry = Date.now() + process.env.USER_TEMPORARY_TOKEN_EXPIRY!;
+  const tokenExpiry = Number(
+    Date.now() + process.env.USER_TEMPORARY_TOKEN_EXPIRY!
+  );
 
   return { unHashedToken, hashedToken, tokenExpiry };
 };
