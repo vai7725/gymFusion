@@ -3,9 +3,9 @@ module.exports = {
   darkMode: ['class'],
   content: [
     './index.html',
+    './src/**/*.{ts,tsx}',
     './src/pages/**/*.{ts,tsx}',
     './src/components/ui/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx.js,jsx}',
   ],
   prefix: '',
   theme: {

@@ -1,13 +1,13 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-import LandingPage from './pages/LandingPage/LandingPage';
 import HomeLayout from './Layout/HomeLayout';
 import AuthLayout from './Layout/AuthLayout';
 import OrderPage from './pages/Dashboard/OrderPage';
-import DashboardLayout from './Layout/DashboardLayout';
-import DashboardPage from './pages/Dashboard/DashboardPage';
 import ErrorPage from './pages/ErrorPage';
+import LandingPage from './pages/LandingPage/LandingPage.tsx';
+import DashboardLayout from './Layout/DashboardLayout.tsx';
+import HomePage from './pages/Dashboard/HomePage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -21,7 +21,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     element: <DashboardLayout />,
     children: [
-      { path: '', element: <DashboardPage /> },
+      { path: '', element: <HomePage /> },
       { path: 'order', element: <OrderPage /> },
     ],
   },
