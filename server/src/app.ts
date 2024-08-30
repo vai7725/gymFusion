@@ -9,11 +9,15 @@ import { errorHandler } from './middlewares/error.middleware';
 import { ApiResponse } from './utils/ApiResponse';
 
 // router imports
-import authRouters from './routes/auth.routes.js';
-import { asyncHandler } from './utils/asyncHandler';
+import authRouters from './routes/auth.routes';
+import facilityRouters from './routes/auth.routes';
+import equipmentRouters from './routes/auth.routes';
 import { ApiError } from './utils/ApiError';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from '../swaggerConfig';
 
 // constants
+
 const app = express();
 
 // middlewares
@@ -38,8 +42,17 @@ app.get(`${BASEPATH}/healthcheck`, (req: Request, res: Response) => {
   }
 });
 
+// api docs
+app.use(`${BASEPATH}/docs`, swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 // auth & user routes
 app.use(`${BASEPATH}/auth`, authRouters);
+
+// facilities routes
+app.use(`${BASEPATH}/facility`, facilityRouters);
+
+// equipment routes
+app.use(`${BASEPATH}/equipment`, equipmentRouters);
 
 // error middleware
 app.use(errorHandler);
