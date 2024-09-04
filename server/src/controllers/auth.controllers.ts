@@ -17,6 +17,7 @@ import { DecodedToken } from '../middlewares/auth.middleware';
 import { uploadOnCloudinary } from '../utils/helpers';
 import { UploadApiResponse } from 'cloudinary';
 import fs from 'fs/promises';
+import { userInfo } from 'os';
 
 interface Tokens {
   accessToken: string;
@@ -158,7 +159,7 @@ export const loginUser = asyncHandler(async (req: Request, res: Response) => {
     .json(
       new ApiResponse(
         200,
-        { user: loggedInUser, accessToken, refreshToken },
+        { userInfo: loggedInUser, accessToken, refreshToken },
         'User logged in successfully'
       )
     );
@@ -209,7 +210,13 @@ export const verifyEmail = asyncHandler(async (req: Request, res: Response) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, { isEmailVerified: true }, 'Email is verified'));
+    .json(
+      new ApiResponse(
+        200,
+        { userInfo: { isEmailVerified: true } },
+        'Email is verified'
+      )
+    );
 });
 
 export const refreshAccessToken = asyncHandler(
@@ -245,7 +252,7 @@ export const refreshAccessToken = asyncHandler(
         .json(
           new ApiResponse(
             200,
-            { accessToken, refreshToken: newRefreshToken },
+            { userInfo: { accessToken, refreshToken: newRefreshToken } },
             'Access token refreshed'
           )
         );
@@ -373,7 +380,11 @@ export const getCurrentUser = asyncHandler(
     return res
       .status(200)
       .json(
-        new ApiResponse(200, req.user, 'Current user fetched successfully')
+        new ApiResponse(
+          200,
+          { userInfo: req.user },
+          'Current user fetched successfully'
+        )
       );
   }
 );
@@ -426,6 +437,12 @@ export const updateUserAvatar = asyncHandler(
 
     return res
       .status(200)
-      .json(new ApiResponse(200, updatedUser, 'Avatar updated successfully'));
+      .json(
+        new ApiResponse(
+          200,
+          { userInfo: updatedUser },
+          'Avatar updated successfully'
+        )
+      );
   }
 );
