@@ -1,15 +1,15 @@
 import { Outlet } from 'react-router-dom';
 import {
-  DashboardHeader,
-  MobileDashboardHeader,
-} from '../components/Header/DashboardHeader';
+  DashboardSidebar,
+  MobileDashboardSideBar,
+} from '../components/Dashboard/DashboardSideBar';
 
 const DashboardLayout = () => {
   return (
-    <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-      <DashboardHeader />
+    <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[220px_1fr]">
+      <DashboardSidebar />
       <div className="flex flex-col">
-        <MobileDashboardHeader />
+        <MobileDashboardSideBar />
         {/* Big screen header */}
         <Outlet />
       </div>

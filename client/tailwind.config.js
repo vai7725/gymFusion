@@ -18,6 +18,11 @@ module.exports = {
     },
     extend: {
       colors: {
+        bg: {
+          dark: 'hsl(var(--bg-100))',
+          light: 'hsl(var(--bg-200))',
+          extralight: 'hsl(var(--bg-300))',
+        },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -26,6 +31,9 @@ module.exports = {
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
+          dark: '#1f3a5f',
+          light: '#4d648d',
+          extralight: '#acc2ef',
         },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
@@ -50,6 +58,10 @@ module.exports = {
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
+        },
+        text: {
+          DEFAULT: '#e0e0e0',
+          light: '#ffffff',
         },
       },
       borderRadius: {

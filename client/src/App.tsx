@@ -21,8 +21,14 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     element: <DashboardLayout />,
     children: [
-      { path: '', element: <HomePage /> },
+      { path: 'home', element: <HomePage /> },
       { path: 'order', element: <OrderPage /> },
+      { path: 'diet-food-plan', element: <OrderPage /> },
+      { path: 'workout-plan', element: <OrderPage /> },
+      { path: 'attendance', element: <OrderPage /> },
+      { path: 'trainers', element: <OrderPage /> },
+      { path: 'subscription', element: <OrderPage /> },
+      { path: 'personal-record', element: <OrderPage /> },
     ],
   },
   {
