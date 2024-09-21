@@ -6,16 +6,16 @@ import { ApiError } from '../utils/ApiError';
 import { availableUserRoles, AvailableUserRoles } from '../constants';
 import Equipment from '../models/equipment.model';
 
-declare module 'express' {
-  export interface Request {
-    user?: {
-      name: string;
-      email: string;
-      phone: number;
-      role: AvailableUserRoles;
-    };
-  }
-}
+// declare module 'express' {
+//   export interface Request {
+//     user?: {
+//       name: string;
+//       email: string;
+//       phone: number;
+//       role: AvailableUserRoles;
+//     };
+//   }
+// }
 
 interface EquipmentBodyType {
   name?: string;

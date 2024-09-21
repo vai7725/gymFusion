@@ -24,13 +24,16 @@ const sendEmail = async (options: MailOptions) => {
   // Create a nodemailer transporter instance which is responsible to send a mail
   const transporter = nodemailer.createTransport({
     service: process.env.EMAIL_SERVICE,
+    host: process.env.EMAIL_HOST,
+    port: Number(process.env.EMAIL_PORT),
+    secure: false,
     auth: {
-      user: process.env.MAILTRAP_SMTP_USER,
-      pass: process.env.MAILTRAP_SMTP_PASS,
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASSWORD,
     },
   });
 
-  const mail = {
+  const mail: nodemailer.SendMailOptions = {
     from: process.env.SENDER_MAIL,
     to: options.email,
     subject: options.subject,

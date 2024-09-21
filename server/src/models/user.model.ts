@@ -118,7 +118,7 @@ const userSchema = new Schema<User>(
       select: false,
     },
     forgotPasswordTokenExpiration: {
-      type: Date,
+      type: Number,
     },
     emailVerificationToken: {
       type: String,
@@ -182,7 +182,7 @@ userSchema.methods.generateTemporaryToken = function (): {
     .digest('hex');
   // This is the expiry time for the token (20 minutes)
   const tokenExpiry = Number(
-    Date.now() + process.env.USER_TEMPORARY_TOKEN_EXPIRY!
+    Date.now() + Number(process.env.USER_TEMPORARY_TOKEN_EXPIRY!)
   );
 
   return { unHashedToken, hashedToken, tokenExpiry };

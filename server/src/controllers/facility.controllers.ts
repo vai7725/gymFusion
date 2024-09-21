@@ -6,16 +6,16 @@ import { ApiError } from '../utils/ApiError';
 import { availableUserRoles } from '../constants';
 import mongoose from 'mongoose';
 
-declare module 'express' {
-  export interface Request {
-    user?: {
-      name: string;
-      email: string;
-      phone: number;
-      role: 'ADMIN' | 'TRAINER' | 'USER';
-    };
-  }
-}
+// declare module 'express' {
+//   export interface Request {
+//     user?: {
+//       name: string;
+//       email: string;
+//       phone: number;
+//       role: 'ADMIN' | 'TRAINER' | 'USER';
+//     };
+//   }
+// }
 
 interface FacilityBodyType {
   name?: string;

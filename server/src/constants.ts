@@ -2,10 +2,12 @@
 export const availableUserRoles = {
   USER: 'USER',
   ADMIN: 'ADMIN',
-  TRAINER: 'TRAINER'
+  TRAINER: 'TRAINER',
 } as const;
-export type AvailableUserRoles = typeof availableUserRoles[keyof typeof availableUserRoles];
-export const availableUserRolesEnum: AvailableUserRoles[] = Object.values(availableUserRoles);
+export type AvailableUserRoles =
+  (typeof availableUserRoles)[keyof typeof availableUserRoles];
+export const availableUserRolesEnum: AvailableUserRoles[] =
+  Object.values(availableUserRoles);
 
 // URI base path
 export const BASEPATH: string = '/api/v1';

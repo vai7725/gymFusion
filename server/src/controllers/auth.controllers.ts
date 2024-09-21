@@ -3,13 +3,13 @@
 import { Request, Response } from 'express';
 import { asyncHandler } from '../utils/asyncHandler';
 import { ApiResponse } from '../utils/ApiResponse';
-import User from '../models/user.model.js';
-import { ApiError } from '../utils/ApiError.js';
+import User from '../models/user.model';
+import { ApiError } from '../utils/ApiError';
 import {
   emailVerificationMailgenContent,
   forgotPasswordMailgenContent,
   sendEmail,
-} from '../utils/mail.js';
+} from '../utils/mail';
 import { cookieOptions } from '../constants';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
@@ -18,6 +18,7 @@ import { uploadOnCloudinary } from '../utils/helpers';
 import { UploadApiResponse } from 'cloudinary';
 import fs from 'fs/promises';
 import { userInfo } from 'os';
+import { Console } from 'console';
 
 interface Tokens {
   accessToken: string;
@@ -126,13 +127,17 @@ export const registerUser = asyncHandler(
 export const loginUser = asyncHandler(async (req: Request, res: Response) => {
   const { email, phone, password } = req.body;
 
-  if ([email, phone, password].some((field) => field === '')) {
-    throw new ApiError(400, 'All fields are required');
+  if (!email && !phone) {
+    throw new ApiError(400, 'At least one of email or phone is required');
+  }
+
+  if (!password) {
+    throw new ApiError(400, 'Password is required');
   }
 
   const user = await User.findOne({
-    $or: [email, phone],
-  });
+    $or: [{ email: email }, { phone: phone }],
+  }).select('+password');
 
   if (!user) {
     throw new ApiError(400, 'User does not exist with the email or phone no.');
@@ -148,7 +153,11 @@ export const loginUser = asyncHandler(async (req: Request, res: Response) => {
     String(user._id)
   );
 
-  const loggedInUser = await User.findById(user._id).select(
+  const loggedInUser = await User.findByIdAndUpdate(
+    user?._id,
+    { $set: { refreshToken: refreshToken } },
+    { new: true }
+  ).select(
     '-password -refreshToken -emailVerificationToken -emailVerificationExpiry'
   );
 
@@ -325,7 +334,7 @@ export const resetForgottenPassword = asyncHandler(
 
     const user = await User.findOne({
       forgotPasswordToken: hashedToken,
-      forgotPasswordExpiry: { $gt: Date.now() },
+      forgotPasswordTokenExpiration: { $gt: Date.now() },
     });
 
     // If either of the one is false that means the token is invalid or expired

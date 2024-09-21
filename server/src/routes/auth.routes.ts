@@ -33,6 +33,6 @@ router.route('/refresh-token').post(refreshAccessToken);
 
 router.route('/avatar').post(updateUserAvatar);
 
-router.route('/current-user').post(getCurrentUser);
+router.route('/current-user').post(verifyJWT, getCurrentUser);
 
 export default router;
